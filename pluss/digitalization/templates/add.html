@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block head %}
+<link href="{% static 'css/bootstrap-select.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Add Content</h1>
+    </div>
+</div>
+
+ <div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <form id="add_form" method="post" enctype="multipart/form-data">
+                        <br>
+                            <div class="dropdown">                 
+                             <label>Type</label>
+                             <br>
+                                  <select  class = "selectpicker" name="genre" id="select3" >  
+                                  <option></option>
+                                  <option>salt</option>
+                                  <option>manufacture</option>
+                                  <option>product</option>
+                                  </select>
+                            </div><br>
+                            <div class="form-group">
+                            <label>Name</label>
+                            <input class="form-control" id="name" name="name" placeholder="Enter Name"  required></input><br>
+                            <div class="dropdown">                 
+                             <label>Manufacture</label>
+                             <br>
+                                  <select  class = "selectpicker" name="genre" id="select3" >  
+                                  <option></option>
+                                  {% for m in manufacture %}      
+                                  <option>{{ m }}</option>  
+                                  {% endfor %}  
+                                  </select>
+                            </div>
+                            <br>
+                            <div class="dropdown">                 
+                             <label>Salts</label>
+                             <br>
+                                  <select  class = "selectpicker" name="genre" id="select3" multiple>  
+                                  <option></option>
+                                  {% for s in salts %}      
+                                  <option>{{ s.name }}</option>  
+                                  {% endfor %}  
+                                  </select>
+                            </div>
+                            <br>
+                            <label>Image</label>
+                            <div class="form-group" >
+                             <!-- <select class="form-control" id="e_poster" name="e_poster" style="width:48.5%;float:right;" onchange="showposterimage();">
+                                  <option value="select poster" selected>select poster</option>
+                                  {% for file in e_poster_list %}
+                                  <option id="{{ file.id }}" style="text-align:center">{{ file.name }}</option>
+                                  {% endfor %}
+                              </select>      -->                      
+                              <input type="file" id="f_poster" name="f_poster" style="width:48.5%;" class="filestyle" data-buttonText="Find file" accept=".jpg">
+                              
+    
+                            </div>
+                            <br>
+                            <label>Content</label>
+                            <input id="link" value="{{ link }}" hidden>
+                            <br>
+                            <button type="submit" onclick="event.preventDefault();addContent();" class="btn btn-primary">Submit Button</button>
+                            <button type="reset" class="btn btn-default">Reset Button</button>
+                            <!-- <input id="approved" value hidden > -->
+                        </form>
+                    </div>
+                    <!-- /.col-lg-6 (nested) -->
+                    <!-- /.col-lg-6 (nested) -->
+                </div>
+                <!-- /.row (nested) -->
+                 <img id="preview" src="" style="float:right;padding-top:20%;">       
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+
+</div>
+
+
+
+{% endblock %}
+ 
+{% block scripts %}
+<script src="{% static 'js/bootstrap-filestyle.min.js' %}" type="text/javascript"> 
+$(":file").filestyle({buttonText: "Find file"});
+</script>
+<script src="{% static 'js/bootstrap-select.min.js' %}" type="text/javascript"></script>  
+<script type="text/javascript">
+  $('.selectpicker').selectpicker();
+  {% if link %}
+    $('#name').val('{{ title }}');
+    $('#hours').val('{{ duration.0 }}');
+    $('#minutes').val('{{ duration.1 }}');
+    $('#seconds').val('{{ duration.2 }}');
+    $('.selectpicker').selectpicker('val','{{ category }}'.toLowerCase());
+    $('#content_type').val('{{ type }}');
+    $('#e_poster').val('{{ poster }}');
+  {% endif %}
+</script>  
+
+{% endblock %}  
